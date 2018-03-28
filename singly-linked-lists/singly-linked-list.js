@@ -25,6 +25,23 @@ class SinglyLinkedList {
     return this;
   }
 
+  shift() {
+    return this.remove(0);
+  }
+
+  unshift(val) {
+    if (this.head === null) {
+      this.head = new Node(val);
+      this.tail = this.head;
+    } else {
+      var newNode = new Node(val);
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+    this.length++;
+    return this;
+  }
+
   get(index) {
     if (index >= this.length || index < 0) {
       return null;
