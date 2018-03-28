@@ -1,0 +1,16 @@
+# Udemy Data Structures and Algorithms in JavaScript
+
+- [Problem Solving](./problem-solving)
+- [Recursion](./recursion)
+- [Searching Algorithms](./searching)
+- [Sorting Algorithms](./sorting)
+- [Singly Linked List](./singly-linked-lists)
+- [Doubly Linked List](./doubly-linked-lists)
+- [Stack](./stacks)
+- [Queue](./queues)
+- [Binary Search Tree](./binary-search-trees)
+- [Binary Heap](./binary-heaps)
+- [Graph](./graphs)
+- [Hash Table](./hash-tables)
+- [Trie](./tries)
+- [Advanced Problem Solving](./advanced-problem-solving)

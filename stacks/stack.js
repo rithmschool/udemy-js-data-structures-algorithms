@@ -1,43 +1,46 @@
-function Node(value) {
-  this.value = value;
-  this.next = null;
-}
-
-function Stack() {
-  this.first = null;
-  this.last = null;
-  this.size = 0;
-}
-
-Stack.prototype.push = function(val) {
-  var node = new Node(val);
-
-  if (!this.first) {
-    this.first = node;
-    this.last = node;
-  } else {
-    var tmp = this.first;
-    this.first = node;
-    this.first.next = tmp;
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
   }
+}
 
-  return ++this.size;
-};
-
-Stack.prototype.pop = function() {
-  if (!this.first) return null;
-
-  var temp = this.first;
-
-  if (this.first == this.last) {
+class Stack {
+  constructor() {
+    this.first = null;
     this.last = null;
+    this.size = 0;
+  }
+  push(val) {
+    var node = new Node(val);
+
+    if (!this.first) {
+      this.first = node;
+      this.last = node;
+    } else {
+      var tmp = this.first;
+      this.first = node;
+      this.first.next = tmp;
+    }
+
+    return ++this.size;
   }
 
-  this.first = this.first.next;
-  this.size--;
-  return temp.value;
-};
+  pop() {
+    if (!this.first) return null;
 
-Stack.prototype.peek = function() {
-  return this.first.value;
-};
+    var temp = this.first;
+
+    if (this.first == this.last) {
+      this.last = null;
+    }
+
+    this.first = this.first.next;
+    this.size--;
+    return temp.value;
+  }
+
+  peek() {
+    return this.first.value;
+  }
+}

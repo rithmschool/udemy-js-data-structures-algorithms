@@ -10,7 +10,7 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
   }
-  insertIteratively(value) {
+  insert(value) {
     if (this.root === null) {
       this.root = new Node(value);
       return this;
@@ -106,75 +106,73 @@ class BinarySearchTree {
     traverse(current);
     return data;
   }
-  __countChildren(node) {
-    var count = 0;
-    if (node.left !== null) count++;
-    if (node.right !== null) count++;
-    return count;
-  }
-  remove(value) {
-    let parent;
-    let side;
-    //curr is the node to remove
-    const curr = findCurr(this.root);
-    if (curr === null) return null;
-    if (curr === this.root) {
-      this.root = null;
-    } else if (!curr.right && !curr.left) {
-      parent[side] = null;
-    } else if (curr.right && curr.left) {
-      removeWhenTwoChildren();
-    } else {
-      removeWhenOneChild;
-    }
-    return curr;
+  remove(val) {
+    var target = this.root;
+    var parent;
 
-    function findCurr(node) {
-      if (node === null) return null;
-      if (node.right.value === value) {
-        parent = node;
-        side = "right";
-        return node.right;
-      }
-      if (node.left.value === value) {
-        parent = node;
-        side = "left";
-        return node.left;
-      }
-      if (value > node.value) return findCurr(node.right);
-      else return findCurr(node.left);
-    }
-    function removeWhenOneChild() {
-      if (curr.right && !curr.left) {
-        parent[side] = curr.right;
-        curr.right = null;
-      }
-      if (curr.left && !curr.right) {
-        parent[side] = curr.left;
-        curr.left = null;
-      }
-    }
-    function removeWhenTwoChildren() {
-      let toRight = curr.right;
-      //toRight doesn't have a left
-      if (!toRight.left) {
-        parent[side] = toRight;
-        toRight.left = curr.left;
+    //     FIND TARGET NODE, ASSIGN PARENT NODE
+    while (target.value !== val) {
+      parent = target;
+      if (val < target.value) {
+        target = target.left;
       } else {
-        //toRight has a left
-        let successorParent = toRight;
-        let successorChild = toRight.left;
-        while (successorChild.left) {
-          successorParent = successorChild;
-          successorChild = successorChild.left;
-        }
-        successorParent.left = successorChild.right;
-        parent[side] = successorChild;
-        successorChild.left = curr.left;
-        successorChild.right = toRight;
+        target = target.right;
       }
-      curr.right = null;
-      curr.left = null;
     }
+
+    //    IF TARGET IS NOT THE ROOT
+    if (target !== this.root) {
+      //       IF NO CHILD NODES
+      if (target.left === null && target.right === null) {
+        if (parent.left === target) {
+          parent.left = null;
+        } else {
+          parent.right = null;
+        }
+        //       IF TWO CHILDREN NODES - NOT WORKING: NEED TO REACH END-NODE
+      } else if (target.left !== null && target.right !== null) {
+        let rightParent = target;
+        let right = target.right;
+        if (right.left === null) {
+          right.left = target.left;
+          if (parent.left === target) {
+            parent.left = right;
+          } else {
+            parent.right = right;
+          }
+        } else {
+          while (right.left !== null) {
+            rightParent = right;
+            right = right.left;
+          }
+          if (parent.left === target) {
+            parent.left.value = right.value;
+          } else {
+            parent.right.value = right.value;
+          }
+          if (right.right !== null) {
+            rightParent.left = right.right;
+          } else {
+            rightParent.left = null;
+          }
+        }
+        //      IF ONE CHILD NODE
+      } else {
+        if (parent.left === target) {
+          if (target.right === null) {
+            parent.left = target.left;
+          } else {
+            parent.left = target.right;
+          }
+        } else {
+          if (target.right === null) {
+            parent.right = target.left;
+          } else {
+            parent.right = target.right;
+          }
+        }
+      }
+    }
+    return target;
   }
 }
