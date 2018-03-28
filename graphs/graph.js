@@ -192,8 +192,6 @@ class WeightedGraph extends Graph {
   }
 }
 
-// Priority Queue stuff
-
 class PriorityQueue {
   constructor() {
     this.values = [];
