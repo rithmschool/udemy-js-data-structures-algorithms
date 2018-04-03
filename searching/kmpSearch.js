@@ -25,18 +25,18 @@ function matchTable(word) {
 }
 
 function kmpSearch(long, short) {
-  let arr = matchTable(short);
+  let table = matchTable(short);
   let shortIdx = 0;
   let longIdx = 0;
   let count = 0;
-  while (longIdx < long.length) {
+  while (longIdx < long.length - short.length + shortIdx + 1) {
     if (short[shortIdx] !== long[longIdx]) {
       // we found a mismatch :(
       // if we just started searching the short, move the long pointer
-      // otherwise, move the short pointer to the start of the next potential prefix
+      // otherwise, move the short pointer to the end of the next potential prefix
       // that will lead to a match
       if (shortIdx === 0) longIdx += 1;
-      else shortIdx = arr[shortIdx - 1];
+      else shortIdx = table[shortIdx - 1];
     } else {
       // we found a match!
       // shift both pointers
@@ -46,9 +46,9 @@ function kmpSearch(long, short) {
       if (shortIdx === short.length) {
         // we found a substring!
         // increment the count
-        // move the short pointer to the start of the next potential prefix
+        // move the short pointer to the end of the next potential prefix
         count++;
-        shortIdx = arr[shortIdx - 1];
+        shortIdx = table[shortIdx - 1];
       }
     }
   }
