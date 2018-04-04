@@ -1,8 +1,4 @@
-function pivot(arr, comparator, start = 0, end = arr.length - 1) {
-  if (typeof comparator !== "function") {
-    comparator = (a, b) => a - b;
-  }
-
+function pivot(arr, start = 0, end = arr.length - 1) {
   const swap = (arr, idx1, idx2) => {
     [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
   };
@@ -12,7 +8,7 @@ function pivot(arr, comparator, start = 0, end = arr.length - 1) {
   var swapIdx = start;
 
   for (var i = start + 1; i <= end; i++) {
-    if (comparator(pivot, arr[i]) > 0) {
+    if (pivot > arr[i]) {
       swapIdx++;
       swap(arr, swapIdx, i);
     }
@@ -23,14 +19,11 @@ function pivot(arr, comparator, start = 0, end = arr.length - 1) {
   return swapIdx;
 }
 
-function quickSort(arr, comparator, left = 0, right = arr.length - 1) {
-  if (typeof comparator !== "function") {
-    comparator = (a, b) => a - b;
-  }
+function quickSort(arr, left = 0, right = arr.length - 1) {
   if (left < right) {
-    let pivotIndex = pivot(arr, comparator, left, right);
-    quickSort(arr, comparator, left, pivotIndex - 1);
-    quickSort(arr, comparator, pivotIndex + 1, right);
+    let pivotIndex = pivot(arr, left, right);
+    quickSort(arr, left, pivotIndex - 1);
+    quickSort(arr, pivotIndex + 1, right);
   }
   return arr;
 }
